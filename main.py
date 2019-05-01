@@ -52,11 +52,11 @@ def test_Kmeans(model, test_data, centroid_assignments):
         return
     elif not np.array_equal(np.array(list(range(10))), np.sort(np.array(centroid_assignments))):
         print("Invalid Input! Centroid assignments must contain all numbers in the range 0-9 (in the order displayed in your plot).")
-        return 
+        return
     elif isinstance(model, KmeansClassifier) == False:
         print("Invalid input! Model must be a KmeansClassifier object.")
         return
-   
+
     accuracy = model.accuracy(test_data, centroid_assignments)
     print("Testing on K-Means Classifier (K = " + str(model.k) + "), the accuracy is {:.2f}%".format(accuracy * 100))
 
@@ -101,10 +101,10 @@ def runKMeans():
     # DO NOT MODIFY ABOVE THIS LINE!
 
     # TODO: uncomment below to plot the centroids for the 10 digits (0-9).
-    # plot_Kmeans(kmeans_model)
+    plot_Kmeans(kmeans_model)
 
     # TODO: fill out centroid_assignments below based on the visualization of plot_Kmeans (in order from left to right). In this step, you are assigning each centroid to its most resembling digit (0-9).
-    # test_Kmeans(kmeans_model, test_data, centroid_assignments=[])
+    test_Kmeans(kmeans_model, test_data, centroid_assignments=[9,2,1,4,3,0,8,6,5,7])
 
 # DO NOT MODIFY BELOW
 def main():

@@ -31,6 +31,7 @@ class KmeansClassifier(object):
         :param X: inputs of training data, a 2D Numpy array
         :return: None
         """
+        self.cluster_centers_ = kmeans(X, self.k, self.max_iter, self.tol)
         # TODO (hint: use kmeans())
         pass
 
@@ -44,7 +45,18 @@ class KmeansClassifier(object):
         """
 
         # TODO: complete this step only after having plotted the centroids!
-        pass
+        predictions = []
+        for x in X:
+            closest = None
+            min_dist = np.inf
+            for i, c in enumerate(self.cluster_centers_):
+                dist = np.linalg.norm(x - c)
+                if dist < min_dist:
+                    min_dist = dist
+                    closest = centroid_assignments[i]
+            predictions.append(closest)
+        predictions = np.array(predictions)
+        return predictions
 
     def accuracy(self, data, centroid_assignments):
         """

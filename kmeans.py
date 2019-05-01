@@ -4,6 +4,8 @@
 """
 import numpy as np
 from random import sample
+import math
+import copy
 
 def init_centroids(k, inputs):
     """
@@ -13,7 +15,11 @@ def init_centroids(k, inputs):
     :return: a Numpy array of k cluster centroids, one per row
     """
     # TODO
-    pass
+    #idx = np.random.randint(len(inputs), size=k)
+    #ret = inputs[idx,:]
+
+    ret = sample(inputs.tolist(), k)
+    return np.array(ret)
 
 
 def assign_step(inputs, centroids):
@@ -24,7 +30,18 @@ def assign_step(inputs, centroids):
     :return: a Numpy array of centroid indices, one for each row of the inputs
     """
     # TODO
-    pass
+    ret = []
+    for row in inputs:
+        dst = math.inf
+        closest = math.inf
+        for i in range(len(centroids)):
+            c = centroids[i]
+            tmp_dst = np.linalg.norm(row-c)
+            if tmp_dst != None and tmp_dst < dst:
+                dst = tmp_dst
+                closest = i
+        ret.append(closest)
+    return ret
 
 
 def update_step(inputs, indices, k):
@@ -36,7 +53,8 @@ def update_step(inputs, indices, k):
     :return: a Numpy array of k cluster centroids, one per row
     """
     # TODO
-    pass
+    ret = []
+    return ret
 
 
 def kmeans(inputs, k, max_iter, tol):
@@ -49,4 +67,15 @@ def kmeans(inputs, k, max_iter, tol):
     :return: a Numpy array of k cluster centroids, one per row
     """
     # TODO
-    pass
+    centroids = init_centroids(k, inputs)
+    c_old = np.zeros(k)
+    for i in range(max_iter):
+        classifications = assign_step(inputs, centroids)
+        c_old = copy.deepcopy(centroids)
+        for k_i in range(k):
+            points = []
+            for j in range(len(inputs)):
+                if classifications[j] == k_i:
+                    points.append(inputs[j])
+            centroids[k_i] = np.mean(points, axis=0)
+    return centroids
